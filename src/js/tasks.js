@@ -2,6 +2,7 @@ import { getFromLs } from './local-storage-api';
 import { saveInLs } from './local-storage-api';
 import { renderMarkup } from './render-tasks';
 import { form } from './refs';
+import iziToast from 'izitoast';
 
 export let TASKS = getFromLs('tasks') || [];
 
@@ -11,7 +12,13 @@ export function addTask(event) {
   const title = formEv.elements.taskName.value.trim();
   const description = formEv.elements.taskDescription.value.trim();
   if (title === '' || description === '') {
-    alert('Fill all fields');
+    iziToast.warning({
+      message: 'Fill all fields',
+      position: 'topRight',
+      timeout: 5000,
+      progressBar: false,
+      close: false,
+    });
     return;
   }
   const newTask = { title, description };
